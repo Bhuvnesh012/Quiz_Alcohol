@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alcohol Consumption Quiz</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #quizContainer {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #resultMessage {
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<div id="quizContainer">
+    <h1>Alcohol Consumption Quiz</h1>
+    <form id="quizForm">
+        <!-- Question 1 -->
+        <label>1. How often do you drink?</label><br>
+        <input type="radio" name="q1" value="A"> Daily
+        <input type="radio" name="q1" value="T"> Never
+        <input type="radio" name="q1" value="S"> Occasionally
+        <input type="radio" name="q1" value="H"> Weekly<br><br>
+
+        <!-- Question 2 -->
+        <label>2. How much do you drink at a time?</label><br>
+        <input type="radio" name="q2" value="A"> Drink till I puke
+        <input type="radio" name="q2" value="S"> One or two drinks
+        <input type="radio" name="q2" value="H"> Three to five drinks
+        <input type="radio" name="q2" value="T"> Zero<br><br>
+
+        <!-- Question 3 -->
+        <label>3. Which brands do you drink?</label><br>
+        <input type="radio" name="q3" value="S"> Any known/familiar brands
+        <input type="radio" name="q3" value="H"> I don’t have a brand preference, but I do have a preferred alcoholic beverage
+        <input type="radio" name="q3" value="T"> I don’t drink
+        <input type="radio" name="q3" value="A"> Anything<br><br>
+
+        <!-- Question 4 -->
+        <label>4. How often does your work suffer because of your drinking?</label><br>
+        <input type="radio" name="q4" value="A"> Once a week
+        <input type="radio" name="q4" value="H"> Once a month
+        <input type="radio" name="q4" value="T"> Never
+        <input type="radio" name="q4" value="S"> Once last year<br><br>
+
+        <!-- Question 5 -->
+        <label>5. Has a friend or loved one asked you to cut down on your drinking?</label><br>
+        <input type="radio" name="q5" value="T"> Never
+        <input type="radio" name="q5" value="H"> Frequently
+        <input type="radio" name="q5" value="S"> Not in the past year
+        <input type="radio" name="q5" value="A"> My friends left me because I drink too much<br><br>
+
+        <button type="button" onclick="submitQuiz()">Submit</button>
+    </form>
+
+    <div id="resultMessage"></div>
+</div>
+
+<script>
+    function submitQuiz() {
+        // Initialize counters for each keyword
+        let countA = 0;
+        let countT = 0;
+        let countS = 0;
+        let countH = 0;
+
+        // Get all selected radio buttons
+        const radioButtons = document.querySelectorAll('input[type=radio]:checked');
+
+        // Count responses for each keyword
+        radioButtons.forEach(radioButton => {
+            const value = radioButton.value;
+            if (value === 'A') {
+                countA++;
+            } else if (value === 'T') {
+                countT++;
+            } else if (value === 'S') {
+                countS++;
+            } else if (value === 'H') {
+                countH++;
+            }
+        });
+
+        // Determine the keyword with the maximum count
+        let maxKeyword = 'A';
+        let maxCount = countA;
+
+        if (countT > maxCount) {
+            maxKeyword = 'T';
+            maxCount = countT;
+        }
+
+        if (countS > maxCount) {
+            maxKeyword = 'S';
+            maxCount = countS;
+        }
+
+        if (countH > maxCount) {
+            maxKeyword = 'H';
+            maxCount = countH;
+        }
+
+        // Display the result message
+        const resultMessage = document.getElementById('resultMessage');
+        switch (maxKeyword) {
+            case 'A':
+                resultMessage.innerHTML = "Maximum A responses: Beware! You are on the verge of being an alcoholic. Remember that 'Sobriety is a journey, not a destination.'";
+                break;
+            case 'T':
+                resultMessage.innerHTML = "Maximum T responses: Good job! You’re a teetotaller!";
+                break;
+            case 'H':
+                resultMessage.innerHTML = "Maximum H responses: Hi there! You’re not an alcoholic yet but you are a heavy drinker. Try cutting down on your intake!";
+                break;
+            case 'S':
+                resultMessage.innerHTML = "Maximum S responses: Not bad! You’re just a social drinker. Remember to stay in control!";
+                break;
+            default:
+                resultMessage.innerHTML = "No responses selected.";
+        }
+    }
+</script>
+</body>
+</html>
